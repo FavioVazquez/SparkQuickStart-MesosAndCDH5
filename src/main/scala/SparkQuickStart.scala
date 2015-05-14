@@ -54,6 +54,36 @@ object SparkQuickStart {
     val res5 = linesWithSpark.count()
     println(res5)
 
+//    2. More on RDD Operations
+
+//    RDD actions and transformations can be used for more complex computations. Let’s
+//    say we want to find the line with the most words:
+
+    val res6 = textFile.map(line => line.split(" ").size).reduce((a,b) => if (a > b) a else b)
+    println(res6)
+
+//    This first maps a line to an integer value, creating a new RDD. reduce is called on
+//    that RDD to find the largest line count. The arguments to map and reduce are Scala
+//    function literals (closures), and can use any language feature or Scala/Java
+//    library. For example, we can easily call functions declared elsewhere.
+//    We’ll use Math.max() function to make this code easier to understand:
+
+    val res7 =textFile.map(line => line.split(" ").size).reduce((a, b) => Math.max(a, b))
+    println(res7)
+
+//    One common data flow pattern is MapReduce, as popularized by Hadoop. Spark can
+//    implement MapReduce flows easily:
+
+    val wordCounts = textFile.flatMap(line => line.split(" ")).map(word => (word, 1))
+                    .reduceByKey((a, b) => a + b)
+
+//    Here, we combined the flatMap, map and reduceByKey transformations to compute the
+//    per-word counts in the file as an RDD of (String, Int) pairs. To collect the word
+//    counts in our shell, we can use the collect action:
+
+    val res8 = wordCounts.collect()
+    println(res8)
+
     sc.stop()
   }
 }
