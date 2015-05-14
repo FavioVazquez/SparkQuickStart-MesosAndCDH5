@@ -20,7 +20,7 @@ object SparkQuickStart {
     val sc = new SparkContext(conf)
     val sqlContext = new SQLContext(sc)
 
-//    BASICS
+//   1. BASICS
 
 //    Spark’s primary abstraction is a distributed collection of items called a
 //    Resilient Distributed Dataset (RDD). RDDs can be created from Hadoop InputFormats
@@ -36,9 +36,24 @@ object SparkQuickStart {
 //    momentary variables in order to see the output
 
     val res1 = textFile.count()
-    val res2 =textFile.first()
+    val res2 = textFile.first()
 
     println(res1,res2)
+
+//    Now let’s use a transformation. We will use the filter transformation to return a
+//    new RDD with a subset of the items in the file.
+
+    val linesWithSpark = textFile.filter(line => line.contains("Spark"))
+
+//    We can chain together transformations and actions:
+
+    val res4 = textFile.filter(line => line.contains("Spark")).count()
+    println(res4)
+
+//    This is the same as
+    val res5 = linesWithSpark.count()
+    println(res5)
+
     sc.stop()
   }
 }
