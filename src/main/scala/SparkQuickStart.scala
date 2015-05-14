@@ -31,13 +31,12 @@ object SparkQuickStart {
 
 //    RDDs have actions, which return values, and transformations, which return
 //    pointers to new RDDs. Let’s start with a few actions:
-//
-
-    val res1 = textFile.count()
-    val res2 =textFile.first()
 
 //    Because we are not running this on the spark-shell we'll have to create some
 //    momentary variables in order to see the output
+
+    val res1 = textFile.count()
+    val res2 =textFile.first()
 
     println(res1,res2)
     sc.stop()
