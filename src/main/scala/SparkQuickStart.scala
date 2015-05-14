@@ -83,6 +83,30 @@ object SparkQuickStart {
     val res8 = wordCounts.collect()
     println(res8)
 
+//    3. Caching
+
+//    Spark also supports pulling data sets into a cluster-wide in-memory cache. This is
+//    very useful when data is accessed repeatedly, such as when querying a small “hot”
+//    dataset or when running an iterative algorithm like PageRank. As a simple example,
+//    let’s mark our linesWithSpark dataset to be cached:
+
+//    Cache the val
+    linesWithSpark.cache()
+
+//    Fisrt call to count ("normal time")
+    val res9 =linesWithSpark.count()
+    println(res9)
+
+//    Now that it was cached this process should be faster (you won't notice until you're
+//    running this with a big file)
+    val res10 = linesWithSpark.count()
+    println(res10)
+
+//    It may seem silly to use Spark to explore and cache a very short text file. The
+//    interesting part is that these same functions can be used on very large data sets,
+//    even when they are striped across tens or hundreds of nodes.
+
     sc.stop()
+
   }
 }
