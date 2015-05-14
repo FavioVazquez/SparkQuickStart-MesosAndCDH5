@@ -1,6 +1,5 @@
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{SparkContext, SparkConf}
-import com.databricks.spark.csv._
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
 
