@@ -20,6 +20,26 @@ object SparkQuickStart {
     val sc = new SparkContext(conf)
     val sqlContext = new SQLContext(sc)
 
+//    BASICS
+
+//    Spark’s primary abstraction is a distributed collection of items called a
+//    Resilient Distributed Dataset (RDD). RDDs can be created from Hadoop InputFormats
+//    (such as HDFS files) or by transforming other RDDs. Let’s make a new RDD from the
+//    text of the README file in the Spark source directory:
+
+    val textFile = sc.textFile("hdfs://master.mcbo.mood.com.ve:8020/README.md")
+
+//    RDDs have actions, which return values, and transformations, which return
+//    pointers to new RDDs. Let’s start with a few actions:
+//
+
+    val res1 = textFile.count()
+    val res2 =textFile.first()
+
+//    Because we are not running this on the spark-shell we'll have to create some
+//    momentary variables in order to see the output
+
+    println(res1,res2)
     sc.stop()
   }
 }
