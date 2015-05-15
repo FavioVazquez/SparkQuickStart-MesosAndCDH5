@@ -1,3 +1,4 @@
+import org.apache.hadoop.yarn.api.protocolrecords.ApplicationsRequestScope
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{SparkContext, SparkConf}
 import org.apache.log4j.Logger
@@ -7,6 +8,9 @@ import org.apache.log4j.Level
  * Created by Favio on 14/05/15.
  */
 object SparkQuickStart {
+
+//  Note that applications should define a main() method instead of extending
+//  scala.App. Subclasses of scala.App may not work correctly
 
   def main(args: Array[String]) {
     Logger.getLogger("org").setLevel(Level.WARN)
@@ -93,7 +97,7 @@ object SparkQuickStart {
 //    Cache the val
     linesWithSpark.cache()
 
-//    Fisrt call to count ("normal time")
+//    First call to count ("normal time")
     val res9 =linesWithSpark.count()
     println(res9)
 
@@ -105,6 +109,17 @@ object SparkQuickStart {
 //    It may seem silly to use Spark to explore and cache a very short text file. The
 //    interesting part is that these same functions can be used on very large data sets,
 //    even when they are striped across tens or hundreds of nodes.
+
+//    4. Self-Contained Applications
+
+//    We've been doing a self contain application from the beginning so we'll just
+//    copy the code that was used in the tutorial here to complete the QuickStart
+
+    val logData = textFile.cache()
+    val numAs = logData.filter(line => line.contains("a")).count()
+    val numBs = logData.filter(line => line.contains("b")).count()
+
+    println(s"Line with a: $numAs, Lines with b: $numBs")
 
     sc.stop()
 
